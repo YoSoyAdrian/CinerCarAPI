@@ -14,8 +14,19 @@ class CreateBillboardsTable extends Migration
     public function up()
     {
         Schema::create('billboards', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('name');
+            $table->date('current_date');
+            $table->boolean('available')->default(true);
+            $table->unsignedInteger('location_id');
+            $table->unsignedInteger('movie_id');
+            $table->integer('number_space');
+            $table->time('hour');
+            $table->date('soon_in');
             $table->timestamps();
+
+            $table->foreign('location_id')->references('id')->on('locations');
+            $table->foreign('movie_id')->references('id')->on('movies');
         });
     }
 

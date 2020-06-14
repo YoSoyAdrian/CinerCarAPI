@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClassificationProductsTable extends Migration
+class CreateClassificationMoviesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateClassificationProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classification_products', function (Blueprint $table) {
-            $table->id();
+        Schema::create('classification_movies', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateClassificationProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classification_products');
+        Schema::dropIfExists('classification_movies');
     }
 }

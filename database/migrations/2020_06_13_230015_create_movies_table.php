@@ -14,8 +14,15 @@ class CreateMoviesTable extends Migration
     public function up()
     {
         Schema::create('movies', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('name');
+            $table->text('sysnopsis');
+            $table->boolean('active')->default(true);
+            $table->unsignedInteger('gener_movie_id');
+            $table->unsignedInteger('classification_movie_id');
             $table->timestamps();
+            $table->foreign('gener_movie_id')->references('id')->on('gener_movies');
+            $table->foreign('classification_movie_id')->references('id')->on('classification_movies');
         });
     }
 

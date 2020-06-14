@@ -13,7 +13,14 @@ class ClassificationProductProduct extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('classification_product_product', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('classification_product_id');
+            $table->unsignedInteger('product_id');
+            $table->timestamps();
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('classification_product_id')->references('id')->on('classification_products');
+        });
     }
 
     /**

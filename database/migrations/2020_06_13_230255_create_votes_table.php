@@ -14,8 +14,11 @@ class CreateVotesTable extends Migration
     public function up()
     {
         Schema::create('votes', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('name');
+            $table->unsignedInteger('movie_id');
             $table->timestamps();
+            $table->foreign('movie_id')->references('id')->on('movies');
         });
     }
 
