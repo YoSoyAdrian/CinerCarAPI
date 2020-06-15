@@ -12,19 +12,19 @@ class Type_productSeeder extends Seeder
     public function run()
     {
         $type_product = new \App\Type_product();
-        $type_product->nombre = 'Dulce';
+        $type_product->name = 'Dulce';
         $type_product->description = 'Palomitas';
         $type_product->save();
 
-        $type_product->nombre = 'Salado';
+        $type_product->name = 'Salado';
         $type_product->description = 'Palomitas';
         $type_product->save();
 
-        $type_product->nombre = 'Bebida';
+        $type_product->name = 'Bebida';
         $type_product->description = 'Bebidas';
         $type_product->save();
 
-        $type_product->nombre = 'Snacks';
+        $type_product->name = 'Snacks';
         $type_product->description = 'Snacks';
         $type_product->save();
     }
