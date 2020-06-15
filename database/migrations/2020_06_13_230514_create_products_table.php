@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
+        $table->integer('amount');
             $table->decimal('price');
             $table->unsignedInteger('type_product_id');
             $table->boolean('active')->default(true);
