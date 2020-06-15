@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vote extends Model
 {
-    //
+   public function movie()
+   {
+       return $this->belongsTo('App\Movie');
+   }
 }
