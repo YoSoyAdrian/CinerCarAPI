@@ -11,6 +11,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $user = new \App\User();
+        $user->name = 'administrador';
+        $user->description = 'administrador';
+        $user->save();
     }
 }

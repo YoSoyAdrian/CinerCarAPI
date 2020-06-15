@@ -11,6 +11,17 @@ class RolSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $rol=new \App\Rol();
+        $rol->name='administrador';
+        $rol->description='administrador';
+        $rol->save();
+
+        $rol = new \App\Rol();
+        $rol->name ='cliente';
+        $rol->description ='cliente';
+        $rol->save();
+
+
+
     }
 }
