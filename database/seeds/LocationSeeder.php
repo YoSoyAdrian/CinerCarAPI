@@ -11,6 +11,16 @@ class LocationSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $location = new \App\Location();
+        $location->name = 'General';
+        $location->save();
+
+        $location = new \App\Location();
+        $location->name = 'VIP';
+        $location->save();
+
+        $location = new \App\Location();
+        $location->name = 'Palco';
+        $location->save();
     }
 }
