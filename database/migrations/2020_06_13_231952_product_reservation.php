@@ -34,5 +34,13 @@ class ProductReservation extends Migration
     public function down()
     {
         //
+        Schema::table(
+            'product_reservation',
+            function (Blueprint $table) {
+                $table->dropForeign('product_reservation_product_id_foreing');
+                $table->dropForeign('product_reservation_reservation_id_foreing');
+            }
+        );
+        Schema::dropIfExists('product_reservation');
     }
 }

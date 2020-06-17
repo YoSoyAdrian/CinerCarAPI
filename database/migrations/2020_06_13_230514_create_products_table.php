@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-        $table->integer('amount');
+          
             $table->decimal('price');
             $table->unsignedInteger('type_product_id');
             $table->boolean('active')->default(true);
@@ -36,6 +36,9 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropForeign('products_type_product_id_foreign');
+        });
         Schema::dropIfExists('products');
     }
 }

@@ -32,5 +32,13 @@ class GenerMovieMovie extends Migration
     public function down()
     {
         //
+        Schema::table(
+            'gener_movie_movie',
+            function (Blueprint $table) {
+                $table->dropForeign('gener_movie_movie_movie_id_foreing');
+                $table->dropForeign('gener_movie_movie_gener_movie_id_foreing');
+            }
+        );
+        Schema::dropIfExists('gener_movie_movie');
     }
 }

@@ -18,13 +18,11 @@ class Movie extends Model
 
     public function classification_movies()
     {
-        return $this->hasMany('App\Classification_Movie');
+        return $this->hasMany('App\Classification_movie');
     }
 
     public function gener_movies()
     {
-        return $this->belongsToMany('App\Gener_Movie');
+        return $this->belongsToMany('App\Gener_movie');
     }
-
-
 }

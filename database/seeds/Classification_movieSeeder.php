@@ -12,5 +12,14 @@ class Classification_movieSeeder extends Seeder
     public function run()
     {
         //
+        $classification_movie = new \App\Classification_movie();
+
+        $classification_movie->name = 'Mayor de 18 años';
+        $classification_movie->save();
+
+        $classification_movie = new \App\Classification_movie();
+
+        $classification_movie->name = 'Todo Público';
+        $classification_movie->save();
     }
 }

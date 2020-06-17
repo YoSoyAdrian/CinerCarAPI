@@ -12,5 +12,16 @@ class Classification_productSeeder extends Seeder
     public function run()
     {
         //
+        $classification_product = new \App\Classification_product();
+        $classification_product->name = 'Grande';
+        $classification_product->save();
+
+        $classification_product = new \App\Classification_product();
+        $classification_product->name = 'Mediano';
+        $classification_product->save();
+
+        $classification_product = new \App\Classification_product();
+        $classification_product->name = 'Pequeño';
+        $classification_product->save();
     }
 }
