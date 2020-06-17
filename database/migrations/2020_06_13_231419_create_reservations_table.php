@@ -34,6 +34,10 @@ class CreateReservationsTable extends Migration
      */
     public function down()
     {
+        Schema::table('likes', function (Blueprint $table) {
+            $table->dropForeign('reservations_billboard_id_foreign');
+            $table->dropForeign('reservations_user_id_foreign');
+        });
         Schema::dropIfExists('reservations');
     }
 }

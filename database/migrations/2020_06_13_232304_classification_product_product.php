@@ -31,5 +31,13 @@ class ClassificationProductProduct extends Migration
     public function down()
     {
         //
+        Schema::table(
+            'classification_product_product',
+            function (Blueprint $table) {
+                $table->dropForeign('classification_product_product_product_id_foreing');
+                $table->dropForeign('classification_product_product_classification_product_id_foreing');
+            }
+        );
+        Schema::dropIfExists('classification_product_product');
     }
 }

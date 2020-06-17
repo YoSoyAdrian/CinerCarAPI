@@ -37,6 +37,10 @@ class CreateBillboardsTable extends Migration
      */
     public function down()
     {
+        Schema::table('billboards', function (Blueprint $table) {
+            $table->dropForeign('billboards_location_id_foreign');
+            $table->dropForeign('billboards_movie_id_foreign');
+        });
         Schema::dropIfExists('billboards');
     }
 }

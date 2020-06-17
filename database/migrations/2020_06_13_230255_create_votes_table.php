@@ -29,6 +29,9 @@ class CreateVotesTable extends Migration
      */
     public function down()
     {
+        Schema::table('votes', function (Blueprint $table) {
+            $table->dropForeign('votes_movie_id_foreign');
+        });
         Schema::dropIfExists('votes');
     }
 }

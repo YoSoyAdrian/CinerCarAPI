@@ -14,22 +14,51 @@ class ProductSeeder extends Seeder
         $product = new \App\Product();
         $product->name = 'Coca Cola';
         $product->description = 'Gaseosa';
+
         $product->price = '2000';
-        $product->estado = true;
+        $product->type_product_id = 3;
+        $product->active = true;
         $product->save();
 
+        $product->classification_products()->attach(
+            [1, 2, 3]
+        );
         $product = new \App\Product();
-        $product->name = 'Cafe';
+        $product->name = 'Café';
         $product->description = 'Bebida caliente';
+
         $product->price = '2500';
-        $product->estado = true;
+        $product->type_product_id = 3;
+        $product->active = true;
         $product->save();
 
+        $product->classification_products()->attach(
+            [1, 2, 3]
+        );
+
         $product = new \App\Product();
-        $product->name = 'Palomitas';
-        $product->description = 'Dulces o Saladas';
+        $product->name = 'Palomita';
+        $product->description = 'Palomitas Dulces';
+
         $product->price = '3500';
-        $product->estado = true;
+        $product->type_product_id = 1;
+        $product->active = true;
         $product->save();
+
+        $product->classification_products()->attach(
+            [1, 2, 3]
+        );
+
+        $product = new \App\Product();
+        $product->name = 'Palomita';
+        $product->description = 'Palomitas Saladas';
+
+        $product->price = '3750';
+        $product->type_product_id = 2;
+        $product->active = true;
+        $product->save();
+        $product->classification_products()->attach(
+            [1, 2, 3]
+        );
     }
 }
