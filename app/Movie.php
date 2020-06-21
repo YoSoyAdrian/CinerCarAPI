@@ -16,9 +16,9 @@ class Movie extends Model
         return $this->hasMany('App\Vote');
     }
 
-    public function classification_movies()
+    public function classification_movie()
     {
-        return $this->hasMany('App\Classification_movie');
+        return $this->belongsTo('App\Classification_movie');
     }
 
     public function gener_movies()

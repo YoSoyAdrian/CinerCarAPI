@@ -14,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'moviecar'], function () {
+    Route::group(['prefix' => 'peliculas'], function () {
+
+        /** oute::group(
+            ['middleware' => 'api', 'prefix' => 'auth'],
+            function ($router) {
+                Route::post('register', 'AuthController@register');
+                Route::post('login', 'AuthController@login');
+                Route::post('logout', 'AuthController@logout');
+                Route::post('refresh', 'AuthController@refresh');
+                Route::post('me', 'AuthController@me');
+            }
+        );
+         */
+        Route::get('', 'MovieController@index');
+        Route::get('all', 'MovieController@all');
+        Route::get('/{id}', 'MovieController@show');
+    });
 });
