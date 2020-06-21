@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
 {
+    protected $fillable = ['name', 'synopsis', 'premiere_date', 'duration', 'active', 'classification_movie_id', 'gener_movies'];
+    protected $guarded = ['id'];
+
     public function billboard()
     {
         return $this->belongsTo('App\Billboard');

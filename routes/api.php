@@ -31,5 +31,7 @@ Route::group(['prefix' => 'moviecar'], function () {
         Route::get('', 'MovieController@index');
         Route::get('all', 'MovieController@all');
         Route::get('/{id}', 'MovieController@show');
+        Route::post('store', 'MovieController@store');
+        Route::post('genner_movie', 'MovieController@genner_movie');
     });
 });

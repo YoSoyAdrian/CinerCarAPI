@@ -61,29 +61,29 @@ class MovieController extends Controller
         } catch (Exception $e) {
         }
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        //INSTANCIA PARA CREAR UNA PELICULA
-        $movie = new Movie();
-        $movie->name->$request->name;
-        
-
-    }
-
+  
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         //
+        $movies = new Movie();
+        $movies->name = $request->input('name');
+        $movies->synopsis = $request->input('synopsis');
+        $movies->premiere_date = $request->input('premiere_date');
+        $movies->duration = $request->input('duration');
+        $movies->active = $request->input('active');
+        $movies->classification_movie_id = $request->input('classification_movie_id');
+
+        //Insertar el usuario
+        $movies->save();
+
+
+        return response()->json($movies, 201);
     }
     /**
      * Show the form for editing the specified resource.

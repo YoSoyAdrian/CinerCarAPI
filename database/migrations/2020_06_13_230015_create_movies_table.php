@@ -19,7 +19,7 @@ class CreateMoviesTable extends Migration
             $table->text('synopsis');
             $table->date('premiere_date');
             $table->string('duration');
-            $table->binary('image');
+            //$table->binary('image');
             $table->boolean('active')->default(true);
             $table->unsignedInteger('classification_movie_id');
             $table->timestamps();
@@ -36,7 +36,6 @@ class CreateMoviesTable extends Migration
     {
         Schema::table('movies', function (Blueprint $table) {
             $table->dropForeign('movies_classification_movie_id_foreign');
-            
         });
 
         Schema::dropIfExists('movies');
