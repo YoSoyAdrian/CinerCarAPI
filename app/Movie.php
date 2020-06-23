@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
 {
+    protected $fillable = ['name', 'synopsis', 'premiere_date', 'duration', 'active', 'classification_movie_id'];
+    protected $guarded = ['id'];
+
     public function billboard()
     {
         return $this->belongsTo('App\Billboard');
@@ -16,9 +19,9 @@ class Movie extends Model
         return $this->hasMany('App\Vote');
     }
 
-    public function classification_movies()
+    public function classification_movie()
     {
-        return $this->hasMany('App\Classification_movie');
+        return $this->belongsTo('App\Classification_movie');
     }
 
     public function gener_movies()

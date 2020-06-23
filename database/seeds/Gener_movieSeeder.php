@@ -27,5 +27,18 @@ class Gener_movieSeeder extends Seeder
         $gener_movie = new \App\Gener_movie();
         $gener_movie->name = 'Animación';
         $gener_movie->save();
+
+        $gener_movie = new \App\Gener_movie();
+        $gener_movie->name = 'Acción';
+        $gener_movie->save();
+
+        $gener_movie = new \App\Gener_movie();
+        $gener_movie->name = 'Superhéroes';
+        $gener_movie->save();
+
+        $gener_movie = new \App\Gener_movie();
+        $gener_movie->name = 'Ciencia ficción';
+        $gener_movie->save();
+
     }
 }
