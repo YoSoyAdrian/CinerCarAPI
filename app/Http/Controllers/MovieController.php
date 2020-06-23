@@ -104,7 +104,9 @@ class MovieController extends Controller
 
             //VALIDACION PARA SABER SI EL REQUEST TRAE LOS GENEROS
             if ($request->get('gener_movie_id')) {
-                $movies->gener_movies()->sync($request->get('gener_movie_id'));
+                $movies->gener_movies()->sync($request->gener_movie_id===null?[]:
+                    $request->get('gener_movie_id'));
+
             }
             return response()->json($movies, 201);
         } catch (Exception $e) {
