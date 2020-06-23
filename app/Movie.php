@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
 {
-    protected $fillable = ['name', 'synopsis', 'premiere_date', 'duration', 'active', 'classification_movie_id', 'gener_movies'];
+    protected $fillable = ['name', 'synopsis', 'premiere_date', 'duration', 'active', 'classification_movie_id'];
     protected $guarded = ['id'];
 
     public function billboard()
