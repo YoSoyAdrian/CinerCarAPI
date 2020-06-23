@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth', ['only' => ['all']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -112,9 +117,18 @@ class MovieController extends Controller
      * @param  \App\Movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function edit(Movie $movie)
+    public function edit(Request $request)
     {
         //
+        //VALIDACION PELICULA
+        $request->validate([
+            'name' => 'required|max:50|unique:movies,name',
+            'synopsis' => 'required|max:50|unique:movies,sypnosis',
+            'premiere_date' => 'required|date',
+            'duration' => 'required|max:50|unique:movies,duration',
+            'active' => 'required|in:si,no',
+            'classification_movie_id' => 'required',
+        ]);
     }
 
     /**

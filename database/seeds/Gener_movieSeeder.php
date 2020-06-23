@@ -39,6 +39,5 @@ class Gener_movieSeeder extends Seeder
         $gener_movie = new \App\Gener_movie();
         $gener_movie->name = 'Ciencia ficción';
         $gener_movie->save();
-
     }
 }
