@@ -37,5 +37,12 @@ Route::group(['prefix' => 'moviecar'], function () {
         Route::patch('/{id}', 'MovieController@destroy');
     });
     Route::group(['prefix' => 'productos'], function () {
+        Route::get('', 'ProductController@index');
+        Route::get('all', 'ProductController@all');
+        Route::get('/{id}', 'ProductController@show');
+        Route::post('create', 'ProductController@create');
+        Route::put('/edit/{id}', 'ProductController@edit');
+        Route::patch('/update/{id}', 'ProductController@update');
+        Route::patch('/{id}', 'ProductController@destroy');
     });
 });
