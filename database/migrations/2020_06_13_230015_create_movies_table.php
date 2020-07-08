@@ -19,7 +19,8 @@ class CreateMoviesTable extends Migration
             $table->text('synopsis');
             $table->date('premiere_date');
             $table->string('duration');
-            //$table->binary('image');
+            $table->string('image');
+            $table->string('banner');
             $table->boolean('active')->default(true);
             $table->unsignedInteger('classification_movie_id');
             $table->timestamps();

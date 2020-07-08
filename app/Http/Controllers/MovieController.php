@@ -11,7 +11,7 @@ class MovieController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['only' => ['all']]);
+        // $this->middleware('jwt.auth', ['only' => ['all']]);
     }
 
     /**
@@ -25,7 +25,7 @@ class MovieController extends Controller
 
             //TODAS LAS PELICULAS ORDENADAS DE MANERA ASCENDENTE
             $movies = Movie::Where('active', true)->orderBy('name', 'asc')->get();
-            $response = [$movies];
+            $response = $movies;
 
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -43,8 +43,8 @@ class MovieController extends Controller
             /*LISTADO DE PELICULAS
          INCLUYENDO LOS GENEROS QUE TIENE ASIGNADOS
          Y LA CLASIFICACION*/
-            $movies = Movie::OrderBy('name', 'asc')->with(["gener_movies", "classification_movie"])->get();
-            $response = [$movies];
+            $movies = Movie::Where('active', true)->OrderBy('name', 'asc')->with(["gener_movies", "classification_movie"])->get();
+            $response = $movies;
             return response()->json($response, 200);
         } catch (Exception $e) {
         }
@@ -61,10 +61,10 @@ class MovieController extends Controller
         try {
 
             //FILTRA TODAS LAS PELICULAS Y OBTIENE UNICAMENTE EL QUE SE SOLICITA
-            $movies = Movie::Where('id', $id)->WithCount('votes')->with(
+            $movies = Movie::Where('active', true)->Where('id', $id)->WithCount('votes')->with(
                 ["gener_movies", "classification_movie"]
-            )->first();
-            $response = [$movies];
+            ) ->first();
+            $response = $movies;
             return response()->json($response, 200);
         } catch (Exception $e) {
         }
@@ -104,9 +104,8 @@ class MovieController extends Controller
 
             //VALIDACION PARA SABER SI EL REQUEST TRAE LOS GENEROS
             if ($request->get('gener_movie_id')) {
-                $movies->gener_movies()->sync($request->gener_movie_id===null?[]:
+                $movies->gener_movies()->sync($request->gener_movie_id === null ? [] :
                     $request->get('gener_movie_id'));
-
             }
             return response()->json($movies, 201);
         } catch (Exception $e) {

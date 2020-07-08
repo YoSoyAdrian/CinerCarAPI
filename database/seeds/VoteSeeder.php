@@ -1,5 +1,6 @@
 <?php
 
+use App\Vote;
 use Illuminate\Database\Seeder;
 
 class VoteSeeder extends Seeder
@@ -12,5 +13,44 @@ class VoteSeeder extends Seeder
     public function run()
     {
         //
+        $vote = new \App\Vote();
+        $vote->movie_id = 1;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 1;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 1;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 2;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 2;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 3;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 3;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 3;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 3;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 3;
+        $vote->save();
     }
 }
