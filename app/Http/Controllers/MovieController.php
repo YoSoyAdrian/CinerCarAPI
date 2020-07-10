@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Movie;
 use App\Gener_movie;
+use App\Vote;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -49,6 +50,23 @@ class MovieController extends Controller
         } catch (Exception $e) {
         }
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function top()
+    {
+        try {
+            $movies = Movie::Where('active', true)->withCount('votes')->OrderByDesc('votes_count')->with([
+                "gener_movies",
+                "classification_movie"
+            ])->limit(3)->get();
+            $response = $movies;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+    }
 
     /**
      * Display the specified resource.
@@ -63,7 +81,7 @@ class MovieController extends Controller
             //FILTRA TODAS LAS PELICULAS Y OBTIENE UNICAMENTE EL QUE SE SOLICITA
             $movies = Movie::Where('active', true)->Where('id', $id)->WithCount('votes')->with(
                 ["gener_movies", "classification_movie"]
-            ) ->first();
+            )->first();
             $response = $movies;
             return response()->json($response, 200);
         } catch (Exception $e) {

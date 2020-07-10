@@ -49,7 +49,7 @@ class MovieSeeder extends Seeder
         $movie->duration = '1h 50m';
         $movie->image = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/c24sv2weTHPsmDa7jEMN0m2P3RT.jpg';
         $movie->banner = "https://image.tmdb.org/t/p/original/vc8bCGjdVp0UbMNLzHnHSLRbBWQ.jpg";
-        $movie->active = true;
+        $movie->active = false;
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(
@@ -89,7 +89,7 @@ class MovieSeeder extends Seeder
         $movie->synopsis = 'Harry Potter es un huérfano que vive con sus desagradables tíos, los Dursley, y su repelente primo Dudley. Se acerca su undécimo cumpleaños y tiene pocas esperanzas de recibir algún regalo, ya que nunca nadie se acuerda de él. Sin embargo, pocos días antes de su cumpleaños, una serie de misteriosas cartas dirigidas a él y escritas con una estridente tinta verde rompen la monotonía de su vida: Harry es un mago y sus padres también lo eran.';
         $movie->premiere_date = '2017-07-07';
         $movie->duration = '2h 32m';
-        $movie->image = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/c24sv2weTHPsmDa7jEMN0m2P3RT.jpg';
+        $movie->image = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/7xXJ15VEf7G9GdAuV1dO769yC73.jpg';
         $movie->banner = "https://image.tmdb.org/t/p/original/hziiv14OpD73u9gAak4XDDfBKa2.jpg";
         $movie->active = true;
         $movie->classification_movie_id = 2;
@@ -119,7 +119,7 @@ class MovieSeeder extends Seeder
         $movie->duration = '2h 21m';
         $movie->image = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/wF9aoo4YZmpKP4bZPSy4Zwwek6G.jpg';
         $movie->banner = "https://image.tmdb.org/t/p/original/v2K8QaAQD0pmEaUTUeV8MXMq1qx.jpg";
-        $movie->active = true;
+        $movie->active = false;
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(
@@ -133,7 +133,7 @@ class MovieSeeder extends Seeder
         $movie->duration = '1h 50m';
         $movie->image = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/6Cn5Lx9kqhXzTNV5QXwZ3RW5pBg.jpg';
         $movie->banner = "https://image.tmdb.org/t/p/original/8f9dnOtpArDrOMEylpSN9Sc6fuz.jpg";
-        $movie->active = true;
+        $movie->active = false;
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(

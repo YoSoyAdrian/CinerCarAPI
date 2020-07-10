@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'moviecar'], function () {
+Route::group(['prefix' => 'cinecar'], function () {
 
     Route::group(
         ['middleware' => 'api', 'prefix' => 'auth'],
@@ -29,6 +29,7 @@ Route::group(['prefix' => 'moviecar'], function () {
     Route::group(['prefix' => 'peliculas'], function () {
         Route::get('', 'MovieController@index');
         Route::get('all', 'MovieController@all');
+        Route::get('top', 'MovieController@top');
         Route::get('/{id}', 'MovieController@show');
         Route::post('create', 'MovieController@create');
         Route::put('/edit/{id}', 'MovieController@edit');
