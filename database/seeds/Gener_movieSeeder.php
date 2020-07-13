@@ -21,9 +21,9 @@ class Gener_movieSeeder extends Seeder
         $gener_movie->name = 'Aventura';
         $gener_movie->save();
 
-        //INFANTIL 3
+        //FANTASIA 3
         $gener_movie = new \App\Gener_movie();
-        $gener_movie->name = 'Infantil';
+        $gener_movie->name = 'Fantasía';
         $gener_movie->save();
 
         //ANIMACION 4
@@ -49,6 +49,11 @@ class Gener_movieSeeder extends Seeder
         //DRAMA 8
         $gener_movie = new \App\Gener_movie();
         $gener_movie->name = 'Drama';
+        $gener_movie->save();
+
+        //FAMILIA 9
+        $gener_movie = new \App\Gener_movie();
+        $gener_movie->name = 'Familia';
         $gener_movie->save();
     }
 }

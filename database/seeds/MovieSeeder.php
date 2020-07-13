@@ -68,7 +68,7 @@ class MovieSeeder extends Seeder
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(
-            [4, 5, 6, 7]
+            [5, 6, 7, 8]
         );
         $movie = new \App\Movie();
         $movie->name = 'El libro de la selva';
@@ -81,7 +81,7 @@ class MovieSeeder extends Seeder
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(
-            [4, 5, 6, 7]
+            [2, 5, 8, 9]
         );
 
         $movie = new \App\Movie();
@@ -95,7 +95,7 @@ class MovieSeeder extends Seeder
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(
-            [4, 5, 6, 7]
+            [2, 3, 5, 9]
         );
 
         $movie = new \App\Movie();
@@ -109,7 +109,7 @@ class MovieSeeder extends Seeder
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(
-            [4, 5, 6, 7]
+            [2, 3, 5, 9]
         );
 
         $movie = new \App\Movie();
@@ -123,7 +123,7 @@ class MovieSeeder extends Seeder
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(
-            [4, 5, 6, 7]
+            [2, 3, 5, 9]
         );
 
         $movie = new \App\Movie();
@@ -137,7 +137,7 @@ class MovieSeeder extends Seeder
         $movie->classification_movie_id = 2;
         $movie->save();
         $movie->gener_movies()->attach(
-            [4, 5, 6, 7]
+            [2, 3, 5, 9]
         );
     }
 }
