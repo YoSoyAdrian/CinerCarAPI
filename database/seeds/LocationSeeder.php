@@ -12,15 +12,15 @@ class LocationSeeder extends Seeder
     public function run()
     {
         $location = new \App\Location();
-        $location->name = 'General';
+        $location->name = 'Alajuela';
         $location->save();
 
         $location = new \App\Location();
-        $location->name = 'VIP';
+        $location->name = 'San José';
         $location->save();
 
         $location = new \App\Location();
-        $location->name = 'Palco';
+        $location->name = 'Heredia';
         $location->save();
     }
 }

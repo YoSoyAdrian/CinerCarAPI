@@ -12,7 +12,8 @@ class VoteSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //SE VA A CAMBIAR LA MANERA DE REGISTRAR DE LOS VOTOS Y LOS LIKES
+
         $vote = new \App\Vote();
         $vote->movie_id = 1;
         $vote->save();
@@ -71,6 +72,30 @@ class VoteSeeder extends Seeder
 
         $vote = new \App\Vote();
         $vote->movie_id = 4;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 5;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 3;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 6;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 6;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 6;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 6;
         $vote->save();
     }
 }

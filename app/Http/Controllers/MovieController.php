@@ -56,7 +56,7 @@ class MovieController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function top()
+    public function votosTop()
     {
         try {
             $movies = Movie::Where('active', true)->withCount('votes')->OrderByDesc('votes_count')->with([

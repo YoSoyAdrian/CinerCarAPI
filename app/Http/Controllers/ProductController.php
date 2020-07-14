@@ -65,8 +65,75 @@ class ProductController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function likesTop()
+    {
+        try {
+            $products = Product::Where('active', true)->withCount('likes')->OrderByDesc('likes_count')->with([
+                "type_product",
+                "classification_products"
+            ])->limit(4)->get();
+            $response = $products;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bebidasTop()
+    {
+        try {
+            $products = Product::Where('active', true)->Where('type_product_id', '3')->withCount('likes')->OrderByDesc('likes_count')->with([
+                "type_product",
+                "classification_products"
+            ])->limit(4)->get();
+            $response = $products;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function platillosTop()
+    {
+        try {
+            $products = Product::Where('active', true)->Where('type_product_id', '5')->withCount('likes')->OrderByDesc('likes_count')->with([
+                "type_product",
+                "classification_products"
+            ])->limit(4)->get();
+            $response = $products;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+    }
 
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function snacksTop()
+    {
+        try {
+            $products = Product::Where('active', true)->Where('type_product_id', '4')->withCount('likes')->OrderByDesc('likes_count')->with([
+                "type_product",
+                "classification_products"
+            ])->limit(4)->get();
+            $response = $products;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -108,7 +175,7 @@ class ProductController extends Controller
 
             //VALIDACION PARA SABER SI EL REQUEST TRAE LAS CLASIFICACIONES
             if ($request->get('classification_products_id')) {
-                $products->classification_products()->sync($request->get('classification_products_id'));
+                $products->classification_products()->sync($request->get('classification_product_id'));
             }
             return response()->json($products, 201);
         } catch (Exception $e) {

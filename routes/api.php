@@ -29,7 +29,7 @@ Route::group(['prefix' => 'cinecar'], function () {
     Route::group(['prefix' => 'peliculas'], function () {
         Route::get('', 'MovieController@index');
         Route::get('all', 'MovieController@all');
-        Route::get('top', 'MovieController@top');
+        Route::get('votosTop', 'MovieController@votosTop');
         Route::get('/{id}', 'MovieController@show');
         Route::post('create', 'MovieController@create');
         Route::put('/edit/{id}', 'MovieController@edit');
@@ -39,8 +39,12 @@ Route::group(['prefix' => 'cinecar'], function () {
     Route::group(['prefix' => 'productos'], function () {
         Route::get('', 'ProductController@index');
         Route::get('all', 'ProductController@all');
-        Route::get('/{id}', 'ProductController@show');
+        Route::get('likesTop', 'ProductController@likesTop');
+        Route::get('bebidasTop', 'ProductController@bebidasTop');
+        Route::get('platillosTop', 'ProductController@platillosTop');
+        Route::get('snacksTop', 'ProductController@snacksTop');
         Route::post('create', 'ProductController@create');
+        Route::get('/{id}', 'ProductController@show');
         Route::put('/edit/{id}', 'ProductController@edit');
         Route::patch('/update/{id}', 'ProductController@update');
         Route::patch('/{id}', 'ProductController@destroy');
