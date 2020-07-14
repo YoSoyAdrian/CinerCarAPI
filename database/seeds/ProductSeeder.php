@@ -178,5 +178,17 @@ class ProductSeeder extends Seeder
         $product->classification_products()->attach(
             [1, 3]
         );
+
+        $product = new \App\Product();
+        $product->name = 'Lasaña';
+        $product->description = "Lasaña con carne molida y queso";
+        $product->price = '3000';
+        $product->image = 'https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2018/04/receta-lasana-de-carne-molida-y-queso-manchego.jpg';
+        $product->type_product_id = 5;
+        $product->active = true;
+        $product->save();
+        $product->classification_products()->attach(
+            [1, 3]
+        );
     }
 }
