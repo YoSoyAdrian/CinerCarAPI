@@ -101,7 +101,7 @@ class ProductSeeder extends Seeder
         $product->name = 'Waffle';
         $product->description = 'Torre de waffle de chocolate';
         $product->price = '2500';
-        $product->image = 'https://www.cucinare.tv/wp-content/uploads/2019/06/Torre-de-waffles-de-chocolate-300x300.jpg';
+        $product->image = 'https://2wvu5s2td87334giuu42cujp-wpengine.netdna-ssl.com/wp-content/uploads/2018/09/lunesweb_7.png';
         $product->type_product_id = 4;
         $product->active = true;
         $product->save();

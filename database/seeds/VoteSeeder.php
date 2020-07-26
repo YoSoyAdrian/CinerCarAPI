@@ -16,86 +16,35 @@ class VoteSeeder extends Seeder
 
         $vote = new \App\Vote();
         $vote->movie_id = 1;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 1;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 1;
+        $vote->vote_count=50;
         $vote->save();
 
         $vote = new \App\Vote();
         $vote->movie_id = 2;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 2;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 3;
+        $vote->vote_count = 20;
         $vote->save();
 
         $vote = new \App\Vote();
         $vote->movie_id = 3;
+        $vote->vote_count = 10;
         $vote->save();
 
-        $vote = new \App\Vote();
-        $vote->movie_id = 3;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 3;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 3;
-        $vote->save();
 
         $vote = new \App\Vote();
         $vote->movie_id = 4;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 4;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 4;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 4;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 4;
+        $vote->vote_count = 50;
         $vote->save();
 
         $vote = new \App\Vote();
         $vote->movie_id = 5;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 3;
-        $vote->save();
-
-        $vote = new \App\Vote();
-        $vote->movie_id = 6;
+        $vote->vote_count = 60;
         $vote->save();
 
         $vote = new \App\Vote();
         $vote->movie_id = 6;
+        $vote->vote_count = 35;
         $vote->save();
 
-        $vote = new \App\Vote();
-        $vote->movie_id = 6;
-        $vote->save();
 
-        $vote = new \App\Vote();
-        $vote->movie_id = 6;
-        $vote->save();
     }
 }

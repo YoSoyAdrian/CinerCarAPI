@@ -13,7 +13,8 @@ class MovieController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('jwt.auth', ['only' => ['all']]);
+        $this->middleware('jwt.auth', ['only' => ['all']]);
+        $this->middleware('jwt.auth', ['only' => ['index']]);
     }
 
     /**
@@ -97,40 +98,67 @@ class MovieController extends Controller
      */
     public function create(Request $request)
     {
+        /* Request entradas del formulario enviadas,
+            debe establecer las entradas requeridas para crear el videojuego
+         */
+        //Especificar las reglas de validación para los campos del videojuego
+        //https://laravel.com/docs/7.x/validation#available-validation-rules
         try {
-
-            //VALIDACION PELICULA
-            $request->validate([
-                'name' => 'required|max:50|unique:movies,name',
-                'synopsis' => 'required|max:50|unique:movies,sypnosis',
-                'premiere_date' => 'required|date',
-                'duration' => 'required|max:50|unique:movies,duration',
-                'active' => 'required|in:si,no',
+            $this->validate($request, [
+                'name' => 'required|min:5',
+                'synopsis' => 'required|min:10',
+                'premiere_date' => 'required',
+                'duration' => 'required',
+                'active' => 'required',
                 'classification_movie_id' => 'required',
+                'gener_movies' => 'required',
+                'images' => 'required|image|mimes:jpg,jpeg,png, gif',
+                'banner' => 'required|image|mimes:jpg,jpeg,png, gif',
             ]);
-
-            //CREACION DE LA PELICULA
-            $movies = new Movie();
-            $movies->name = $request->name;
-            $movies->synopsis = $request->synopsis;
-            $movies->premiere_date = $request->premiere_date;
-            $movies->duration = $request->duration;
-            $movies->active = $request->active;
-            $movies->classification_movie_id = $request->classification_movie_id;
-
-            //GUARDAMOS LA PELICULA
-            $movies->save();
-
-            //VALIDACION PARA SABER SI EL REQUEST TRAE LOS GENEROS
-            if ($request->get('gener_movie_id')) {
-                $movies->gener_movies()->sync($request->gener_movie_id === null ? [] :
-                    $request->get('gener_movie_id'));
-            }
-            return response()->json($movies, 201);
-        } catch (Exception $e) {
-            //throw $th;
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            //Formato para los errores de validación
+            return $this->responseErrors($e->errors(), 422);
         }
+
+        $image = $request->file('images');
+        $banner = $request->file('banner');
+
+        $image_name = time() . $image->getClientOriginalName();
+        \Storage::disk('images')->put($image_name, \File::get($image));
+
+        $banner_name = time() . $banner->getClientOriginalName();
+        \Storage::disk('images')->put($banner_name, \File::get($banner));
+
+        $movie = new Movie();
+        $movie->name = $request->input('name');
+        $movie->synopsis = $request->input('synopsis');
+        $movie->premiere_date = $request->input('premiere_date');
+        $movie->duration = $request->input('duration');
+        $movie->active = $request->input('active');
+        $movie->classification_movie_id = $request->input('classification_movie_id');
+        $movie->image = $image_name;
+        $movie->banner = $banner_name;
+        /*
+
+        Relación de uno a muchos
+        https://laravel.com/docs/7.x/eloquent-relationships#updating-belongs-to-relationships
+
+*/
+        if ($movie->save()) {
+
+            $movie->gener_movies()->attach(
+                $request->input('gener_movies') === null ?
+                    [] : $request->input('gener_movies')
+            );
+            $response = 'Pelicula creada!';
+            return response()->json($response, 201);
+        }
+        $response = [
+            'msg' => 'Error durante la creación'
+        ];
+        return response()->json($response, 404);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -141,14 +169,7 @@ class MovieController extends Controller
     {
         //
         //VALIDACION PELICULA
-        $request->validate([
-            'name' => 'required|max:50|unique:movies,name',
-            'synopsis' => 'required|max:50|unique:movies,sypnosis',
-            'premiere_date' => 'required|date',
-            'duration' => 'required|max:50|unique:movies,duration',
-            'active' => 'required|in:si,no',
-            'classification_movie_id' => 'required',
-        ]);
+
     }
 
     /**

@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('jwt.auth', ['only' => ['all']]);
+        $this->middleware('jwt.auth', ['only' => ['index']]);
+        $this->middleware('jwt.auth', ['only' => ['create']]);
+        $this->middleware('jwt.auth', ['only' => ['update']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -147,41 +156,47 @@ class ProductController extends Controller
         try {
             //VALIDACION PRODUCTO
             $request->validate([
-                'name' => 'required|max:50|unique:products,name',
-                'description' => 'required|max:50|',
+                'name' => 'required|max:50',
+                'description' => 'required|max:50',
                 'price' => 'required',
                 'type_product_id' => 'required',
                 'active' => 'required',
+                'images' => 'required|image|mimes:jpg,jpeg,png, gif',
+                'classification_products' => 'required'
 
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->responseErrors($e->errors(), 422);
         }
-        try {
+        //CREACION DEL PRODUCTO
+        $products = new Product();
+        $products->name = $request->name;
+        $products->description = $request->description;
+        $products->price = $request->price;
+        $products->type_product_id = $request->type_product_id;
+        $products->active = $request->active;
+
+        $image = $request->file('images');
+
+        $image_name = time() . $image->getClientOriginalName();
+        \Storage::disk('images')->put($image_name, \File::get($image));
+
+        $products->image = $image_name;
 
 
-            //CREACION DEL PRODUCTO
-            $products = new Product();
-            $products->name = $request->name;
-            $products->description = $request->description;
-            $products->price = $request->price;
-            $products->type_product_id = $request->type_product_id;
-            $products->active = $request->active;
+        if ($products->save()) {
 
-
-            //GUARDAMOS EL PRODUCTO
-            $products->save();
-
-
-            //VALIDACION PARA SABER SI EL REQUEST TRAE LAS CLASIFICACIONES
-            if ($request->get('classification_products_id')) {
-                $products->classification_products()->sync($request->get('classification_product_id'));
-            }
-            return response()->json($products, 201);
-        } catch (Exception $e) {
-            //throw $th;
-            return response()->json($e->getMessage(), 422);
+            $products->classification_products()->attach(
+                $request->input('classification_products') === null ?
+                    [] : $request->input('classification_products')
+            );
+            $response = 'Producto creado!';
+            return response()->json($response, 201);
         }
+        $response = [
+            'msg' => 'Error durante la creación'
+        ];
+        return response()->json($response, 404);
     }
 
 
