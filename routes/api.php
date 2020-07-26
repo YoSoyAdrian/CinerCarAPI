@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'cinecar'], function () {
 
     Route::group(
-        ['middleware' => 'api', 'prefix' => 'auth'],
+        ['prefix' => 'auth'],
         function ($router) {
             Route::post('register', 'AuthController@register');
             Route::post('login', 'AuthController@login');
@@ -26,16 +26,28 @@ Route::group(['prefix' => 'cinecar'], function () {
             Route::post('me', 'AuthController@me');
         }
     );
+
+
+    Route::group([
+        'prefix' => 'roles'
+    ], function ($router) {
+        Route::get('', 'RolController@index');
+    });
+
     Route::group(['prefix' => 'peliculas'], function () {
         Route::get('', 'MovieController@index');
         Route::get('all', 'MovieController@all');
+        Route::post('create', 'MovieController@create');
         Route::get('votosTop', 'MovieController@votosTop');
         Route::get('/{id}', 'MovieController@show');
-        Route::post('create', 'MovieController@create');
         Route::put('/edit/{id}', 'MovieController@edit');
-        Route::patch('/update/{id}', 'MovieController@update');
+        Route::patch('/{id}', 'MovieController@update');
         Route::patch('/{id}', 'MovieController@destroy');
     });
+    Route::group(['prefix' => 'votos'], function () {
+        Route::patch('/{id}', 'VoteController@update');
+    });
+
     Route::group(['prefix' => 'productos'], function () {
         Route::get('', 'ProductController@index');
         Route::get('all', 'ProductController@all');
@@ -46,7 +58,7 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::post('create', 'ProductController@create');
         Route::get('/{id}', 'ProductController@show');
         Route::put('/edit/{id}', 'ProductController@edit');
-        Route::patch('/update/{id}', 'ProductController@update');
+        Route::patch('/{id}', 'ProductController@update');
         Route::patch('/{id}', 'ProductController@destroy');
     });
 });
