@@ -15,6 +15,7 @@ class MovieController extends Controller
     {
         $this->middleware('jwt.auth', ['only' => ['all']]);
         $this->middleware('jwt.auth', ['only' => ['index']]);
+        $this->middleware('jwt.auth', ['only' => ['create']]);
     }
 
     /**
@@ -60,10 +61,7 @@ class MovieController extends Controller
     public function votosTop()
     {
         try {
-            $movies = Movie::Where('active', true)->withCount('votes')->OrderByDesc('votes_count')->with([
-                "gener_movies",
-                "classification_movie"
-            ])->limit(4)->get();
+            $movies = Movie::Where('active', true)->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->limit(4)->get();
             $response = $movies;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -83,7 +81,7 @@ class MovieController extends Controller
             //FILTRA TODAS LAS PELICULAS Y OBTIENE UNICAMENTE EL QUE SE SOLICITA
             $movies = Movie::Where('active', true)->Where('id', $id)->WithCount('votes')->with(
                 ["gener_movies", "classification_movie"]
-            )->addSelect(['classification_name' => Classification_movie::select('name')->WhereColumn('classification_movie_id', 'classification_movies.id')])->first();
+            )->addSelect(['classification_name' => Classification_movie::select('name')->WhereColumn('classification_movie_id', 'classification_movies.id')])->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->first();
             $response = $movies;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -105,9 +103,9 @@ class MovieController extends Controller
         //https://laravel.com/docs/7.x/validation#available-validation-rules
         try {
             $this->validate($request, [
-                'name' => 'required|min:5',
-                'synopsis' => 'required|min:10',
-                'premiere_date' => 'required',
+                'name' => 'required|min:5|string',
+                'synopsis' => 'required|min:10|string',
+                'premiere_date' => 'required|date',
                 'duration' => 'required',
                 'active' => 'required',
                 'classification_movie_id' => 'required',
