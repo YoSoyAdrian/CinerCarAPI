@@ -158,11 +158,11 @@ class ProductController extends Controller
             $request->validate([
                 'name' => 'required|max:50',
                 'description' => 'required|max:50',
-                'price' => 'required',
-                'type_product_id' => 'required',
-                'active' => 'required',
+                'price' => 'required|numeric',
+                'type_product_id' => 'required|integer|exists:type_products,id',
+                'active' => 'required|in:1,0',
                 'images' => 'required|image|mimes:jpg,jpeg,png, gif',
-                'classification_products' => 'required'
+                'classification_products' => 'required|exists:classification_products,id'
 
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -187,8 +187,8 @@ class ProductController extends Controller
         if ($products->save()) {
 
             $products->classification_products()->attach(
-                $request->input('classification_products') === null ?
-                    [] : $request->input('classification_products')
+                $request->input('classification_product_id') === null ?
+                    [] : $request->input('classification_product_id')
             );
             $response = 'Producto creado!';
             return response()->json($response, 201);

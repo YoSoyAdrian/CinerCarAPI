@@ -13,8 +13,7 @@ class MovieController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['only' => ['all']]);
-        $this->middleware('jwt.auth', ['only' => ['index']]);
+
         $this->middleware('jwt.auth', ['only' => ['create']]);
     }
 
@@ -79,7 +78,7 @@ class MovieController extends Controller
         try {
 
             //FILTRA TODAS LAS PELICULAS Y OBTIENE UNICAMENTE EL QUE SE SOLICITA
-            $movies = Movie::Where('active', true)->Where('id', $id)->WithCount('votes')->with(
+            $movies = Movie::Where('active', true)->Where('id', $id)->with(
                 ["gener_movies", "classification_movie"]
             )->addSelect(['classification_name' => Classification_movie::select('name')->WhereColumn('classification_movie_id', 'classification_movies.id')])->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->first();
             $response = $movies;
@@ -107,9 +106,9 @@ class MovieController extends Controller
                 'synopsis' => 'required|min:10|string',
                 'premiere_date' => 'required|date',
                 'duration' => 'required',
-                'active' => 'required',
-                'classification_movie_id' => 'required',
-                'gener_movies' => 'required',
+                'active' => 'required|in:1,0',
+                'classification_movie_id' => 'required|exists:classification_movies,id',
+                'gener_movies' => 'required|exists:gener_movies,id',
                 'images' => 'required|image|mimes:jpg,jpeg,png, gif',
                 'banner' => 'required|image|mimes:jpg,jpeg,png, gif',
             ]);
@@ -145,8 +144,8 @@ class MovieController extends Controller
         if ($movie->save()) {
 
             $movie->gener_movies()->attach(
-                $request->input('gener_movies') === null ?
-                    [] : $request->input('gener_movies')
+                $request->input('gener_movie_id') === null ?
+                    [] : $request->input('gener_movie_id')
             );
             $response = 'Pelicula creada!';
             return response()->json($response, 201);

@@ -24,7 +24,6 @@ class VoteController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -67,9 +66,26 @@ class VoteController extends Controller
      * @param  \App\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vote $vote)
+    public function update($id)
     {
-        //
+        //ACTUALIZAR VOTO
+        try {
+            //VALIDACION VOTO
+
+            //ACTUALIZACION O CREACION DEL VOTO
+            $vote = Vote::Where('movie_id', $id)->value('vote_count');
+            $movie = Vote::Where('movie_id', $id)->value('id');
+
+            $updateVote = Vote::Where('id', $movie)->updateOrInsert(['movie_id' => $movie], ['vote_count' => ($vote + 1)])->value('vote_count');
+            $data = [
+                'Pelicula' => $movie,
+                'Cant.voto Anterior' => $vote,
+                'Cant.voto Nueva' => $updateVote
+            ];
+            return response()->json($data, 202);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->responseErrors($e->errors(), 422);
+        }
     }
 
     /**
