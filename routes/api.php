@@ -47,7 +47,9 @@ Route::group(['prefix' => 'cinecar'], function () {
     Route::group(['prefix' => 'votos'], function () {
         Route::patch('/{id}', 'VoteController@update');
     });
-
+    Route::group(['prefix' => 'likes'], function () {
+        Route::patch('/{id}', 'LikeController@update');
+    });
     Route::group(['prefix' => 'productos'], function () {
         Route::get('', 'ProductController@index');
         Route::get('all', 'ProductController@all');

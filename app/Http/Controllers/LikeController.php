@@ -67,9 +67,26 @@ class LikeController extends Controller
      * @param  \App\Like  $like
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Like $like)
+    public function update($id)
     {
-        //
+        //ACTUALIZAR LIKE
+        try {
+            //ACTUALIZACION O CREACION DEL LIKE
+            $like = Like::Where('product_id', $id)->value('like_count');
+            $product = Like::Where('product_id', $id)->value('id');
+
+
+            $updateLike = Like::Where('id', $product)->updateOrInsert(['product_id' => $product], ['like_count' => ($like + 1)])->value('like_count');
+            $data = [
+                'Producto' => $product,
+                'Cant.Like Anterior' => $like,
+                'Cant.Like Nueva' => $updateLike
+            ];
+
+            return response()->json($data, 202);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->responseErrors($e->errors(), 422);
+        }
     }
 
     /**

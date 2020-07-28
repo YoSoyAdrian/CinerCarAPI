@@ -17,6 +17,7 @@ class CreateLikesTable extends Migration
             $table->increments('id');
 
             $table->unsignedInteger('product_id');
+            $table->integer('like_count');
 
             $table->timestamps();
 

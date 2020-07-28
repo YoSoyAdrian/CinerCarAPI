@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Like;
 use App\Product;
 use Exception;
 use Illuminate\Http\Request;
@@ -65,9 +66,9 @@ class ProductController extends Controller
         try {
 
             //Filtra todos los productos y obtiene unicamente el que se solicita
-            $productos = Product::Where('id', $id)->WithCount('likes')->with(
+            $productos = Product::Where('id', $id)->with(
                 ["type_product", "classification_products"]
-            )->first();
+            )->addSelect(['like_count' => Like::select('like_count')->WhereColumn('product_id', 'products.id')])->first();;
             $response = $productos;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -82,7 +83,7 @@ class ProductController extends Controller
     public function likesTop()
     {
         try {
-            $products = Product::Where('active', true)->withCount('likes')->OrderByDesc('likes_count')->with([
+            $products = Product::Where('active', true)->withCount('likes')->OrderByDesc('like_count')->with([
                 "type_product",
                 "classification_products"
             ])->limit(4)->get();
