@@ -15,6 +15,15 @@ class ClassificationMovieController extends Controller
     public function index()
     {
         //
+        try {
+
+            //TODAS LAS CLASIFICACIONES ORDENADAS DE MANERA ASCENDENTE
+            $classification_movie = Classification_movie::orderBy('name', 'asc')->get();
+            $response = $classification_movie;
+
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
     }
 
     /**

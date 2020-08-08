@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
         $user->rol_id = 1;
         $user->save();
 
+        $user = new \App\User();
         $user->name = 'Usuario 2';
         $user->email = 'usuario2@gmail.com';
         $user->password = bcrypt('123456');

@@ -9,9 +9,9 @@ class Movie extends Model
     protected $fillable = ['name', 'synopsis', 'premiere_date', 'duration', 'active', 'classification_movie_id', 'image', 'banner'];
     protected $guarded = ['id'];
 
-    public function billboard()
+    public function billboards()
     {
-        return $this->belongsTo('App\Billboard');
+        return $this->hasMany('App\Billboard');
     }
 
     public function votes()

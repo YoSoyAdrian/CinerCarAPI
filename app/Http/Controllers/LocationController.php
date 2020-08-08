@@ -15,6 +15,15 @@ class LocationController extends Controller
     public function index()
     {
         //
+        try {
+
+            //TODAS LAS LOCALIZACIONES ORDENADAS DE MANERA ASCENDENTE
+            $location = Location::OrderBy('name', 'asc')->get();
+            $response = $location;
+
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
     }
 
     /**

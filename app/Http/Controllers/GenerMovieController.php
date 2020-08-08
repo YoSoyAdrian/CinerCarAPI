@@ -15,6 +15,15 @@ class GenerMovieController extends Controller
     public function index()
     {
         //
+        try {
+
+            //TODAS LAS GENEROS ORDENADAS DE MANERA ASCENDENTE
+            $gener = Gener_movie::orderBy('name', 'asc')->get();
+            $response = $gener;
+
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
     }
 
     /**

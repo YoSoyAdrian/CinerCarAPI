@@ -15,6 +15,15 @@ class TicketController extends Controller
     public function index()
     {
         //
+        try {
+
+            //TODOS LOS TICKETES ORDENADAS DE MANERA ASCENDENTE
+            $ticket = Ticket::OrderBy('name', 'asc')->get();
+            $response = $ticket;
+
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
     }
 
     /**

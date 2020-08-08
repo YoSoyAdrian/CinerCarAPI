@@ -15,14 +15,15 @@ class CreateBillboardsTable extends Migration
     {
         Schema::create('billboards', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+
             $table->date('current_date');
             $table->boolean('available')->default(true);
             $table->unsignedInteger('location_id');
             $table->unsignedInteger('movie_id');
             $table->integer('number_space');
             $table->time('hour');
-            $table->date('soon_in');
+            $table->boolean('visible');
+
             $table->timestamps();
 
             $table->foreign('location_id')->references('id')->on('locations');

@@ -16,8 +16,8 @@ class GenerMovieMovie extends Migration
         //
         Schema::create('gener_movie_movie', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('gener_movie_id');
-            $table->unsignedInteger('movie_id');
+            $table->unsignedInteger('gener_movie_id')->nullable();
+            $table->unsignedInteger('movie_id')->nullable();
             $table->timestamps();
             $table->foreign('gener_movie_id')->references('id')->on('gener_movies');
             $table->foreign('movie_id')->references('id')->on('movies');

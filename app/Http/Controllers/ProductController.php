@@ -12,7 +12,7 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['only' => ['all']]);
+      
         $this->middleware('jwt.auth', ['only' => ['index']]);
         $this->middleware('jwt.auth', ['only' => ['create']]);
         $this->middleware('jwt.auth', ['only' => ['update']]);

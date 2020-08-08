@@ -14,7 +14,7 @@ class MovieController extends Controller
     public function __construct()
     {
 
-        $this->middleware('jwt.auth', ['only' => ['create']]);
+        //$this->middleware('jwt.auth', ['only' => ['create']]);
     }
 
     /**
@@ -46,7 +46,7 @@ class MovieController extends Controller
             /*LISTADO DE PELICULAS
          INCLUYENDO LOS GENEROS QUE TIENE ASIGNADOS
          Y LA CLASIFICACION*/
-            $movies = Movie::Where('active', true)->OrderBy('name', 'asc')->with(["gener_movies", "classification_movie"])->get();
+            $movies = Movie::OrderBy('name', 'asc')->with(["gener_movies", "classification_movie"])->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->get();
             $response = $movies;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -100,31 +100,23 @@ class MovieController extends Controller
          */
         //Especificar las reglas de validación para los campos del videojuego
         //https://laravel.com/docs/7.x/validation#available-validation-rules
-        try {
-            $this->validate($request, [
-                'name' => 'required|min:5|string',
-                'synopsis' => 'required|min:10|string',
-                'premiere_date' => 'required|date',
-                'duration' => 'required',
-                'active' => 'required|in:1,0',
-                'classification_movie_id' => 'required|exists:classification_movies,id',
-                'gener_movies' => 'required|exists:gener_movies,id',
-                'images' => 'required|image|mimes:jpg,jpeg,png, gif',
-                'banner' => 'required|image|mimes:jpg,jpeg,png, gif',
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            //Formato para los errores de validación
-            return $this->responseErrors($e->errors(), 422);
-        }
+        // try {
+        //     $this->validate($request, [
+        //         'name' => 'required|min:5|string',
+        //         'synopsis' => 'required|min:10|string',
+        //         'premiere_date' => 'required|date',
+        //         'duration' => 'required',
+        //         'active' => 'required|in:1,0',
+        //         'classification_movie_id' => 'required|exists:classification_movies,id',
+        //         'gener_movies' => 'required|exists:gener_movies,id',
+        //         'images' => 'required|image|mimes:jpg,jpeg,png, gif',
+        //         'banner' => 'required|image|mimes:jpg,jpeg,png, gif',
+        //     ]);
+        // } catch (\Illuminate\Validation\ValidationException $e) {
+        //     //Formato para los errores de validación
+        //     return $this->responseErrors($e->errors(), 422);
+        // }
 
-        $image = $request->file('images');
-        $banner = $request->file('banner');
-
-        $image_name = time() . $image->getClientOriginalName();
-        \Storage::disk('images')->put($image_name, \File::get($image));
-
-        $banner_name = time() . $banner->getClientOriginalName();
-        \Storage::disk('images')->put($banner_name, \File::get($banner));
 
         $movie = new Movie();
         $movie->name = $request->input('name');
@@ -133,8 +125,25 @@ class MovieController extends Controller
         $movie->duration = $request->input('duration');
         $movie->active = $request->input('active');
         $movie->classification_movie_id = $request->input('classification_movie_id');
-        $movie->image = $image_name;
-        $movie->banner = $banner_name;
+
+
+
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . $image->getClientOriginalName();
+            \Storage::disk('images')->put($image_name, \File::get($image));
+            $movie->image = $image_name;
+        }
+        if ($request->hasFile('banner')) {
+            $banner = $request->file('banner');
+            $banner_name = time() . $banner->getClientOriginalName();
+            \Storage::disk('images')->put($banner_name, \File::get($banner));
+            $movie->banner = $banner_name;
+        }
+
+
+
         /*
 
         Relación de uno a muchos

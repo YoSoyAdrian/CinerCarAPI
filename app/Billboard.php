@@ -13,11 +13,15 @@ class Billboard extends Model
 
     public function location()
     {
-        return $this->belongsTo('App\location');
+        return $this->belongsTo('App\Location');
     }
 
-   public function movies()
-   {
-       return $this->hasMany('App\Movie');
-   }
+    public function movie()
+    {
+        return $this->belongsTo('App\Movie');
+    }
+    public function tickets()
+    {
+        return $this->belongsToMany('App\Ticket');
+    }
 }

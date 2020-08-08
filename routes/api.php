@@ -35,14 +35,18 @@ Route::group(['prefix' => 'cinecar'], function () {
     });
 
     Route::group(['prefix' => 'peliculas'], function () {
-        Route::get('', 'MovieController@index');
-        Route::get('all', 'MovieController@all');
         Route::post('create', 'MovieController@create');
+        Route::get('', 'MovieController@index');
+        Route::get('generos', 'GenerMovieController@index');
+        Route::get('clasificaciones', 'ClassificationMovieController@index');
+        Route::get('all', 'MovieController@all');
+
+
         Route::get('votosTop', 'MovieController@votosTop');
         Route::get('/{id}', 'MovieController@show');
-        Route::put('/edit/{id}', 'MovieController@edit');
         Route::patch('/{id}', 'MovieController@update');
         Route::patch('/{id}', 'MovieController@destroy');
+        Route::put('/edit/{id}', 'MovieController@edit');
     });
     Route::group(['prefix' => 'votos'], function () {
         Route::patch('/{id}', 'VoteController@update');
@@ -62,5 +66,12 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::put('/edit/{id}', 'ProductController@edit');
         Route::patch('/{id}', 'ProductController@update');
         Route::patch('/{id}', 'ProductController@destroy');
+    });
+    Route::group(['prefix' => 'carteleras'], function () {
+        Route::get('all', 'BillboardController@all');
+        Route::get('peliculas', 'MovieController@index');
+        Route::get('tiquetes', 'TicketController@index');
+        Route::get('localizacion', 'LocationController@index');
+        Route::post('create', 'BillboardController@create');
     });
 });

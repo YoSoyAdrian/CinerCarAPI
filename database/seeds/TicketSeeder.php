@@ -17,16 +17,19 @@ class TicketSeeder extends Seeder
         $ticket->price = '2000';
         $ticket->save();
 
+        $ticket = new \App\Ticket();
         $ticket->name = 'Automóvil';
         $ticket->description = 'Máximo 5 personas por ticket';
         $ticket->price = '5000';
         $ticket->save();
 
+        $ticket = new \App\Ticket();
         $ticket->name = 'Bicicleta';
         $ticket->description = 'Máximo 2 personas por ticket';
         $ticket->price = '3000';
         $ticket->save();
 
+        $ticket = new \App\Ticket();
         $ticket->name = 'Motocicleta';
         $ticket->description = 'Máximo 2 personas por ticket';
         $ticket->price = '4000';
