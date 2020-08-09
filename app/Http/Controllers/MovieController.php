@@ -128,16 +128,16 @@ class MovieController extends Controller
 
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_name = time() . $image->getClientOriginalName();
-            \Storage::disk('images')->put($image_name, \File::get($image));
-            $movie->image = $image_name;
+            $image = $request->file('image')->store('public');
+            $file_path = \Storage::url($image);
+            $url = asset($file_path);
+            $movie->image = $url;
         }
         if ($request->hasFile('banner')) {
-            $banner = $request->file('banner');
-            $banner_name = time() . $banner->getClientOriginalName();
-            \Storage::disk('images')->put($banner_name, \File::get($banner));
-            $movie->banner = $banner_name;
+            $banner = $request->file('banner')->store('public');
+            $file_path = \Storage::url($banner);
+            $url = asset($file_path);
+            $movie->banner = $url;
         }
 
 

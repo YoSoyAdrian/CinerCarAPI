@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Billboard;
+use App\Movie;
+use Carbon\Traits\Converter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Type\Integer;
 
 class BillboardController extends Controller
 {
@@ -28,9 +32,10 @@ class BillboardController extends Controller
 
             /*LISTADO DE CARTELERAS
          INCLUYENDO LOS TICKETS QUE TIENE ASIGNADOS, LOCALIZACION Y PELICULA */
-            $billboard = Billboard::OrderBy('current_date', 'asc')->with(["tickets", "location", "movie"])->get();
-            $response = $billboard;
-            return response()->json($response, 200);
+            $billboard = Billboard::OrderBy('current_date', 'asc')->with(["tickets", "location", "movie"])->addSelect(['image_movie' => Movie::select('image')->WhereColumn('movie_id', 'movies.id')])->get();
+
+       
+            return response()->json($billboard, 200);
         } catch (Exception $e) {
         }
     }
@@ -107,9 +112,14 @@ class BillboardController extends Controller
      * @param  \App\Billboard  $billboard
      * @return \Illuminate\Http\Response
      */
-    public function show(Billboard $billboard)
+    public function show($filename)
     {
-        //
+
+
+        // DEVOLVER LA IMAGEN
+
+        $file = asset('storage/app/' . $filename);
+        return response()->json($file, 201);
     }
 
     /**
