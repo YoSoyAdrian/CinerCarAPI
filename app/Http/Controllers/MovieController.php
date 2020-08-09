@@ -100,22 +100,22 @@ class MovieController extends Controller
          */
         //Especificar las reglas de validación para los campos del videojuego
         //https://laravel.com/docs/7.x/validation#available-validation-rules
-        // try {
-        //     $this->validate($request, [
-        //         'name' => 'required|min:5|string',
-        //         'synopsis' => 'required|min:10|string',
-        //         'premiere_date' => 'required|date',
-        //         'duration' => 'required',
-        //         'active' => 'required|in:1,0',
-        //         'classification_movie_id' => 'required|exists:classification_movies,id',
-        //         'gener_movies' => 'required|exists:gener_movies,id',
-        //         'images' => 'required|image|mimes:jpg,jpeg,png, gif',
-        //         'banner' => 'required|image|mimes:jpg,jpeg,png, gif',
-        //     ]);
-        // } catch (\Illuminate\Validation\ValidationException $e) {
-        //     //Formato para los errores de validación
-        //     return $this->responseErrors($e->errors(), 422);
-        // }
+        try {
+            $this->validate($request, [
+                'name' => 'required|min:5|string',
+                'synopsis' => 'required|min:10|string',
+                'premiere_date' => 'required|date',
+                'duration' => 'required',
+                'active' => 'required|in:1,0',
+                'classification_movie_id' => 'required|exists:classification_movies,id',
+                'gener_movies' => 'required|exists:gener_movies,id',
+                'image' => 'required|image|mimes:jpg,jpeg,png, gif',
+                'banner' => 'required|image|mimes:jpg,jpeg,png, gif',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            //Formato para los errores de validación
+            return $this->responseErrors($e->errors(), 422);
+        }
 
 
         $movie = new Movie();
@@ -125,8 +125,6 @@ class MovieController extends Controller
         $movie->duration = $request->input('duration');
         $movie->active = $request->input('active');
         $movie->classification_movie_id = $request->input('classification_movie_id');
-
-
 
 
         if ($request->hasFile('image')) {
@@ -153,9 +151,15 @@ class MovieController extends Controller
         if ($movie->save()) {
 
             $movie->gener_movies()->attach(
-                $request->input('gener_movie_id') === null ?
-                    [] : $request->input('gener_movie_id')
+                $request->input('gener_movies') === null ?
+                    [] : $request->input('gener_movies')
             );
+
+            $voto = new Vote();
+            $voto->movie_id = $movie->id;
+            $voto->vote_count = 0;
+            $voto->save();
+
             $response = 'Pelicula creada!';
             return response()->json($response, 201);
         }
