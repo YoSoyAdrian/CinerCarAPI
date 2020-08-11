@@ -48,7 +48,7 @@ class ProductController extends Controller
 
             /*Listado de productos incluyendo tipos de productos
             y la clasificación*/
-            $productos = Product::OrderBy('name', 'asc')->with(["type_product", "classification_products"])->get();
+            $productos = Product::OrderBy('name', 'asc')->with(["type_product", "classification_products"])->addSelect(['like_count' => Like::select('like_count')->WhereColumn('product_id', 'products.id')])->get();
             $response = $productos;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -68,8 +68,8 @@ class ProductController extends Controller
 
             //Filtra todos los productos y obtiene unicamente el que se solicita
             $productos = Product::Where('id', $id)->with(
-                ["type_product", "classification_products"]
-            )->addSelect(['like_count' => Like::select('like_count')->WhereColumn('product_id', 'products.id')])->first();;
+                ["type_product", "classification_products", "likes"]
+            )->first();
             $response = $productos;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -84,9 +84,9 @@ class ProductController extends Controller
     public function likesTop()
     {
         try {
-            $products = Product::Where('active', true)->withCount('likes')->OrderByDesc('like_count')->with([
+            $products = Product::Where('active', true)->with([
                 "type_product",
-                "classification_products"
+                "classification_products", "likes"
             ])->limit(4)->get();
             $response = $products;
             return response()->json($response, 200);
@@ -192,6 +192,12 @@ class ProductController extends Controller
                 $request->input('classification_products') === null ?
                     [] : $request->input('classification_products')
             );
+
+            $like = new Like();
+            $like->product_id = $products->id;
+            $like->like_count = 0;
+            $like->save();
+
             $response = 'Producto creado!';
             return response()->json($response, 201);
         }
