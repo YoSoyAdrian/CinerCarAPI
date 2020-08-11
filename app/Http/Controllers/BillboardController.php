@@ -11,6 +11,16 @@ use Ramsey\Uuid\Type\Integer;
 
 class BillboardController extends Controller
 {
+
+
+    public function __construct()
+    {
+
+
+        $this->middleware('jwt.auth', ['only' => ['create']]);
+        $this->middleware('jwt.auth', ['only' => ['update']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,9 +42,9 @@ class BillboardController extends Controller
 
             /*LISTADO DE CARTELERAS
          INCLUYENDO LOS TICKETS QUE TIENE ASIGNADOS, LOCALIZACION Y PELICULA */
-            $billboard = Billboard::OrderBy('current_date', 'asc')->with(["tickets", "location", "movie"])->addSelect(['image_movie' => Movie::select('image')->WhereColumn('movie_id', 'movies.id')])->get();
+            $billboard = Billboard::OrderBy('current_date', 'asc')->with(["tickets", "location", "movie"])->get();
 
-       
+
             return response()->json($billboard, 200);
         } catch (Exception $e) {
         }

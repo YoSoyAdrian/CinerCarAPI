@@ -45,6 +45,20 @@ class VoteSeeder extends Seeder
         $vote->vote_count = 35;
         $vote->save();
 
+        $vote = new \App\Vote();
+        $vote->movie_id = 8;
+        $vote->vote_count = 12;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 7;
+        $vote->vote_count = 29;
+        $vote->save();
+
+        $vote = new \App\Vote();
+        $vote->movie_id = 9;
+        $vote->vote_count = 33;
+        $vote->save();
 
     }
 }

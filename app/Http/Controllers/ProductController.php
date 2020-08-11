@@ -6,14 +6,15 @@ use App\Like;
 use App\Product;
 use Exception;
 use Illuminate\Http\Request;
+use SebastianBergmann\Environment\Console;
 
 class ProductController extends Controller
 {
 
     public function __construct()
     {
-      
-        $this->middleware('jwt.auth', ['only' => ['index']]);
+
+
         $this->middleware('jwt.auth', ['only' => ['create']]);
         $this->middleware('jwt.auth', ['only' => ['update']]);
     }
@@ -157,12 +158,12 @@ class ProductController extends Controller
         try {
             //VALIDACION PRODUCTO
             $request->validate([
-                'name' => 'required|max:50',
-                'description' => 'required|max:50',
-                'price' => 'required|numeric',
-                'type_product_id' => 'required|integer|exists:type_products,id',
+                'name' => 'required|max:500',
+                'description' => 'required|max:500',
+                'price' => 'required',
+                'type_product_id' => 'required|exists:type_products,id',
                 'active' => 'required|in:1,0',
-                'images' => 'required|image|mimes:jpg,jpeg,png, gif',
+                'image' => 'required',
                 'classification_products' => 'required|exists:classification_products,id'
 
             ]);
@@ -177,19 +178,19 @@ class ProductController extends Controller
         $products->type_product_id = $request->type_product_id;
         $products->active = $request->active;
 
-        $image = $request->file('images');
+        if ($request->hasFile('image')) {
 
-        $image_name = time() . $image->getClientOriginalName();
-        \Storage::disk('images')->put($image_name, \File::get($image));
-
-        $products->image = $image_name;
-
+            $image = $request->file('image')->store('public');
+            $file_path = \Storage::url($image);
+            $url = asset($file_path);
+            $products->image = $url;
+        }
 
         if ($products->save()) {
 
             $products->classification_products()->attach(
-                $request->input('classification_product_id') === null ?
-                    [] : $request->input('classification_product_id')
+                $request->input('classification_products') === null ?
+                    [] : $request->input('classification_products')
             );
             $response = 'Producto creado!';
             return response()->json($response, 201);

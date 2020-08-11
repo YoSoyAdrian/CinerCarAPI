@@ -15,6 +15,15 @@ class ClassificationProductController extends Controller
     public function index()
     {
         //
+        try {
+
+            //TODAS LAS CLASIFICACIONES ORDENADAS DE MANERA ASCENDENTE
+            $classification_product = Classification_product::orderBy('name', 'asc')->get();
+            $response = $classification_product;
+
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
     }
 
     /**

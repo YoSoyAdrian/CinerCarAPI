@@ -16,7 +16,7 @@ class AuthController extends Controller
         /* Utilizar el middleware de autentificación
             Indicando que excepto las accione de login y register deben solicitarse autentificación */
 
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'me']]);
     }
     //Registrar usuario
     //Request todos los datos enviados
@@ -35,7 +35,7 @@ class AuthController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
-            $user->rol_id = $request->rol_id;
+            $user->rol_id = 1;
 
             //Insertar el usuario
             $user->save();

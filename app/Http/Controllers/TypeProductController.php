@@ -15,6 +15,15 @@ class TypeProductController extends Controller
     public function index()
     {
         //
+        try {
+
+            //TODOS LOS TIPOS ORDENADOS DE MANERA ASCENDENTE
+            $type_product = Type_product::orderBy('name', 'asc')->get();
+            $response = $type_product;
+
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
     }
 
     /**

@@ -56,6 +56,8 @@ Route::group(['prefix' => 'cinecar'], function () {
     });
     Route::group(['prefix' => 'productos'], function () {
         Route::get('', 'ProductController@index');
+        Route::get('clasificaciones', 'ClassificationProductController@index');
+        Route::get('tipoProductos', 'TypeProductController@index');
         Route::get('all', 'ProductController@all');
         Route::get('likesTop', 'ProductController@likesTop');
         Route::get('bebidasTop', 'ProductController@bebidasTop');
@@ -74,6 +76,5 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::get('localizacion', 'LocationController@index');
         Route::post('create', 'BillboardController@create');
         Route::get('/{fileName}', 'BillboardController@show');
-        
     });
 });

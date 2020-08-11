@@ -1,0 +1,10 @@
+{
+  "gitlens.views.compare.enabled": false,
+  "gitlens.views.search.enabled": false,
+  "gitlens.views.lineHistory.enabled": false,
+  "gitlens.views.repositories.enabled": true,
+  "gitlens.hovers.enabled": false,
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.hovers.currentLine.over": "line"
+}
