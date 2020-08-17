@@ -122,14 +122,17 @@ class BillboardController extends Controller
      * @param  \App\Billboard  $billboard
      * @return \Illuminate\Http\Response
      */
-    public function show($filename)
+    public function show($id)
     {
+        try {
 
+            //FILTRA TODAS LAS PELICULAS Y OBTIENE UNICAMENTE EL QUE SE SOLICITA
+            $cartelera = Billboard::Where('available', true)->Where('id', $id)->with(["tickets", "location", "movie"])->first();
+            $response = $cartelera;
 
-        // DEVOLVER LA IMAGEN
-
-        $file = asset('storage/app/' . $filename);
-        return response()->json($file, 201);
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
     }
 
     /**

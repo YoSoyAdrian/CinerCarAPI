@@ -75,6 +75,6 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::get('tiquetes', 'TicketController@index');
         Route::get('localizacion', 'LocationController@index');
         Route::post('create', 'BillboardController@create');
-        Route::get('/{fileName}', 'BillboardController@show');
+        Route::get('/{id}', 'BillboardController@show');
     });
 });
