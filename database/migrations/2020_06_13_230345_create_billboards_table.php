@@ -23,7 +23,6 @@ class CreateBillboardsTable extends Migration
             $table->integer('number_space');
             $table->time('hour');
             $table->boolean('visible');
-
             $table->timestamps();
 
             $table->foreign('location_id')->references('id')->on('locations');

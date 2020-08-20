@@ -29,6 +29,35 @@ class BillboardController extends Controller
     public function index()
     {
         //
+        try {
+
+            /*LISTADO DE CARTELERAS
+         INCLUYENDO LOS TICKETS QUE TIENE ASIGNADOS, LOCALIZACION Y PELICULA */
+            $billboard = Billboard::Where("available", true)->Where("visible", true)->OrderBy('current_date', 'asc')->with(["tickets", "location", "movie"])->get();
+
+
+            return response()->json($billboard, 200);
+        } catch (Exception $e) {
+        }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tiketes($id)
+    {
+
+        try {
+
+            /*LISTADO DE CARTELERAS
+         INCLUYENDO LOS TICKETS QUE TIENE ASIGNADOS, LOCALIZACION Y PELICULA */
+            $billboard = Billboard::Where("id", $id)->with(["tickets"])->get();
+
+
+            return response()->json($billboard, 200);
+        } catch (Exception $e) {
+        }
     }
     /**
      * Display a listing of the resource.
@@ -42,7 +71,26 @@ class BillboardController extends Controller
 
             /*LISTADO DE CARTELERAS
          INCLUYENDO LOS TICKETS QUE TIENE ASIGNADOS, LOCALIZACION Y PELICULA */
-            $billboard = Billboard::OrderBy('current_date', 'asc')->with(["tickets", "location", "movie"])->get();
+            $billboard = Billboard::Where("available", true)->OrderBy('current_date', 'asc')->with(["tickets", "location", "movie"])->get();
+
+
+            return response()->json($billboard, 200);
+        } catch (Exception $e) {
+        }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function desactivadas()
+    {
+        //
+        try {
+
+            /*LISTADO DE CARTELERAS
+         INCLUYENDO LOS TICKETS QUE TIENE ASIGNADOS, LOCALIZACION Y PELICULA */
+            $billboard = Billboard::Where("available", false)->OrderBy('current_date', 'asc')->with(["tickets", "location", "movie"])->get();
 
 
             return response()->json($billboard, 200);

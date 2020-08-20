@@ -46,7 +46,25 @@ class MovieController extends Controller
             /*LISTADO DE PELICULAS
          INCLUYENDO LOS GENEROS QUE TIENE ASIGNADOS
          Y LA CLASIFICACION*/
-            $movies = Movie::OrderBy('name', 'asc')->with(["gener_movies", "classification_movie"])->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->get();
+            $movies = Movie::Where('active', true)->OrderBy('name', 'asc')->with(["gener_movies", "classification_movie"])->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->get();
+            $response = $movies;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function desactivadas()
+    {
+        try {
+
+            /*LISTADO DE PELICULAS
+         INCLUYENDO LOS GENEROS QUE TIENE ASIGNADOS
+         Y LA CLASIFICACION*/
+            $movies = Movie::Where('active', false)->OrderBy('name', 'asc')->with(["gener_movies", "classification_movie"])->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->get();
             $response = $movies;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -192,11 +210,48 @@ class MovieController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $movies = Movie::find($id);
-        foreach ($movies->gener_movies as $gener_id) {
-        }
+        $movie = Movie::findOrFail($id);
+        $movie->name = $request->input('name');
+        $movie->synopsis = $request->input('synopsis');
+        $movie->premiere_date = $request->input('premiere_date');
+        $movie->duration = $request->input('duration');
+        $movie->active = $request->input('active');
+        $movie->classification_movie_id = $request->input('classification_movie_id');
 
-        return response()->json($movies, 201);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('public');
+            $file_path = \Storage::url($image);
+            $url = asset($file_path);
+            $movie->image = $url;
+        }
+        if ($request->hasFile('banner')) {
+            $banner = $request->file('banner')->store('public');
+            $file_path = \Storage::url($banner);
+            $url = asset($file_path);
+            $movie->banner = $url;
+        }
+        /*
+
+        Relación de uno a muchos
+        https://laravel.com/docs/7.x/eloquent-relationships#updating-belongs-to-relationships
+
+*/
+        if ($movie->save()) {
+
+            $movie->gener_movies()->sync(
+                $request->input('gener_movies') === null ?
+                    [] : $request->input('gener_movies')
+            );
+
+
+            $response = 'Pelicula actualizada!';
+            return response()->json($movie, 201);
+        }
+        $response = [
+            'msg' => 'Error durante la actualización'
+        ];
+        return response()->json($response, 404);
     }
 
     /**

@@ -16,6 +16,7 @@ class CreateClassificationProductsTable extends Migration
         Schema::create('classification_products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->decimal('price');
             $table->timestamps();
         });
     }

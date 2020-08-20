@@ -48,7 +48,25 @@ class ProductController extends Controller
 
             /*Listado de productos incluyendo tipos de productos
             y la clasificación*/
-            $productos = Product::OrderBy('name', 'asc')->with(["type_product", "classification_products"])->addSelect(['like_count' => Like::select('like_count')->WhereColumn('product_id', 'products.id')])->get();
+            $productos = Product::Where('active', true)->OrderBy('name', 'asc')->with(["type_product", "classification_products"])->addSelect(['like_count' => Like::select('like_count')->WhereColumn('product_id', 'products.id')])->get();
+            $response = $productos;
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function desactivadas()
+    {
+        try {
+
+            /*Listado de productos incluyendo tipos de productos
+            y la clasificación*/
+            $productos = Product::Where('active', false)->OrderBy('name', 'asc')->with(["type_product", "classification_products"])->addSelect(['like_count' => Like::select('like_count')->WhereColumn('product_id', 'products.id')])->get();
             $response = $productos;
             return response()->json($response, 200);
         } catch (Exception $e) {

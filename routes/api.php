@@ -40,12 +40,10 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::get('generos', 'GenerMovieController@index');
         Route::get('clasificaciones', 'ClassificationMovieController@index');
         Route::get('all', 'MovieController@all');
-
-
+        Route::get('desactivadas', 'MovieController@desactivadas');
         Route::get('votosTop', 'MovieController@votosTop');
         Route::get('/{id}', 'MovieController@show');
-        Route::patch('/{id}', 'MovieController@update');
-        Route::patch('/{id}', 'MovieController@destroy');
+        Route::post('/update/{id}', 'MovieController@update');
         Route::put('/edit/{id}', 'MovieController@edit');
     });
     Route::group(['prefix' => 'votos'], function () {
@@ -70,11 +68,14 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::patch('/{id}', 'ProductController@destroy');
     });
     Route::group(['prefix' => 'carteleras'], function () {
+        Route::get('index', 'BillboardController@index');
         Route::get('all', 'BillboardController@all');
+        Route::get('desactivadas', 'BillboardController@desactivadas');
         Route::get('peliculas', 'MovieController@index');
         Route::get('tiquetes', 'TicketController@index');
         Route::get('localizacion', 'LocationController@index');
         Route::post('create', 'BillboardController@create');
         Route::get('/{id}', 'BillboardController@show');
+        Route::get('tiketes/{id}', 'BillboardController@tiketes');
     });
 });
