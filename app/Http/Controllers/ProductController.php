@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Like;
 use App\Product;
+use App\Type_product;
 use Exception;
 use Illuminate\Http\Request;
 use SebastianBergmann\Environment\Console;
@@ -87,7 +88,7 @@ class ProductController extends Controller
             //Filtra todos los productos y obtiene unicamente el que se solicita
             $productos = Product::Where('id', $id)->with(
                 ["type_product", "classification_products", "likes"]
-            )->first();
+            )->addSelect(['type_product_name' => Type_product::select('name')->WhereColumn('type_product_id', 'type_products.id')])->addSelect(['like_count' => Like::select('like_count')->WhereColumn('product_id', 'products.id')])->first();
             $response = $productos;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -171,8 +172,6 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-
-
         try {
             //VALIDACION PRODUCTO
             $request->validate([
@@ -266,9 +265,39 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
         //
+        $products = Product::find($id);
+        $products->name = $request->name;
+        $products->description = $request->description;
+        $products->price = $request->price;
+        $products->type_product_id = $request->type_product_id;
+        $products->active = $request->active;
+
+        if ($request->hasFile('image')) {
+
+            $image = $request->file('image')->store('public');
+            $file_path = \Storage::url($image);
+            $url = asset($file_path);
+            $products->image = $url;
+        }
+
+        if ($products->save()) {
+
+            $products->classification_products()->sync(
+                $request->input('classification_products') === null ?
+                    [] : $request->input('classification_products')
+            );
+
+
+            $response = 'Producto actualizado!';
+            return response()->json($response, 201);
+        }
+        $response = [
+            'msg' => 'Error durante la actualización'
+        ];
+        return response()->json($response, 404);
     }
 
     /**

@@ -67,7 +67,7 @@ class LikeController extends Controller
      * @param  \App\Like  $like
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         //ACTUALIZAR LIKE
         try {
@@ -76,7 +76,7 @@ class LikeController extends Controller
             $product = Like::Where('product_id', $id)->value('id');
 
 
-            $updateLike = Like::Where('id', $product)->updateOrInsert(['product_id' => $product], ['like_count' => ($like + 1)])->value('like_count');
+            $updateLike = Like::Where('id', $product)->updateOrInsert(['product_id' => $product], ['like_count' => ($like + $request->cantidad)])->value('like_count');
             $data = [
                 'Producto' => $product,
                 'Cant.Like Anterior' => $like,

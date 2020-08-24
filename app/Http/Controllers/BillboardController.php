@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Billboard;
+use App\Gener_movie;
 use App\Movie;
 use Carbon\Traits\Converter;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class BillboardController extends Controller
 
 
         $this->middleware('jwt.auth', ['only' => ['create']]);
-        $this->middleware('jwt.auth', ['only' => ['update']]);
+        // $this->middleware('jwt.auth', ['only' => ['update']]);
     }
 
     /**
@@ -116,7 +117,7 @@ class BillboardController extends Controller
                 'number_space' => 'required',
                 'hour' => 'required',
                 'visible' => 'required',
-
+                'date' => 'required'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             //Formato para los errores de validación
@@ -133,7 +134,7 @@ class BillboardController extends Controller
         $billboard->number_space = $request->input('number_space');
         $billboard->hour = $request->input('hour');
         $billboard->visible = $request->input('visible');
-
+        $billboard->date = $request->input('date');
         $billboard->movie_id = $request->input('movie_id');
 
 
@@ -201,9 +202,26 @@ class BillboardController extends Controller
      * @param  \App\Billboard  $billboard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Billboard $billboard)
+    public function update(Request $request, $id)
     {
-        //
+        //ACTUALIZAR CAMPOS
+        try {
+
+
+            //ACTUALIZACION
+            $campos = Billboard::Where('id', $id)->value('number_space');
+
+
+            $affected = Billboard::where('id', $id)->decrement('number_space', $request->cantidad);
+            $data = [
+                'Cartelera' => $affected,
+                'Campos reservados' => $request->cantidad,
+                'Campos disponibles' => $campos
+            ];
+            return response()->json($data, 202);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->responseErrors($e->errors(), 422);
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ class Product extends Model
 {
     protected $fillable = ['name', 'description', 'price', 'type_product_id', 'active', 'image'];
     protected $guarded = ['id'];
+    
     public function type_product()
     {
         return $this->belongsTo('App\Type_product');

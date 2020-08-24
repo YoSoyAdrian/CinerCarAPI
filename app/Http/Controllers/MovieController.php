@@ -14,7 +14,8 @@ class MovieController extends Controller
     public function __construct()
     {
 
-        //$this->middleware('jwt.auth', ['only' => ['create']]);
+        $this->middleware('jwt.auth', ['only' => ['create']]);
+        $this->middleware('jwt.auth', ['only' => ['update']]);
     }
 
     /**
@@ -78,7 +79,7 @@ class MovieController extends Controller
     public function votosTop()
     {
         try {
-            $movies = Movie::Where('active', true)->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->limit(4)->get();
+            $movies = Movie::Where('active', true)->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->OrderByDesc('vote_count')->limit(4)->get();
             $response = $movies;
             return response()->json($response, 200);
         } catch (Exception $e) {
@@ -96,7 +97,7 @@ class MovieController extends Controller
         try {
 
             //FILTRA TODAS LAS PELICULAS Y OBTIENE UNICAMENTE EL QUE SE SOLICITA
-            $movies = Movie::Where('active', true)->Where('id', $id)->with(
+            $movies = Movie::Where('id', $id)->with(
                 ["gener_movies", "classification_movie"]
             )->addSelect(['classification_name' => Classification_movie::select('name')->WhereColumn('classification_movie_id', 'classification_movies.id')])->addSelect(['vote_count' => Vote::select('vote_count')->WhereColumn('movie_id', 'movies.id')])->first();
             $response = $movies;
@@ -113,11 +114,7 @@ class MovieController extends Controller
      */
     public function create(Request $request)
     {
-        /* Request entradas del formulario enviadas,
-            debe establecer las entradas requeridas para crear el videojuego
-         */
-        //Especificar las reglas de validación para los campos del videojuego
-        //https://laravel.com/docs/7.x/validation#available-validation-rules
+
         try {
             $this->validate($request, [
                 'name' => 'required|min:5|string',
@@ -135,7 +132,6 @@ class MovieController extends Controller
             return $this->responseErrors($e->errors(), 422);
         }
 
-
         $movie = new Movie();
         $movie->name = $request->input('name');
         $movie->synopsis = $request->input('synopsis');
@@ -143,7 +139,6 @@ class MovieController extends Controller
         $movie->duration = $request->input('duration');
         $movie->active = $request->input('active');
         $movie->classification_movie_id = $request->input('classification_movie_id');
-
 
         if ($request->hasFile('image')) {
             $image = $request->file('image')->store('public');
@@ -158,14 +153,6 @@ class MovieController extends Controller
             $movie->banner = $url;
         }
 
-
-
-        /*
-
-        Relación de uno a muchos
-        https://laravel.com/docs/7.x/eloquent-relationships#updating-belongs-to-relationships
-
-*/
         if ($movie->save()) {
 
             $movie->gener_movies()->attach(

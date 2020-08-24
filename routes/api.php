@@ -47,11 +47,12 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::put('/edit/{id}', 'MovieController@edit');
     });
     Route::group(['prefix' => 'votos'], function () {
-        Route::patch('/{id}', 'VoteController@update');
+        Route::patch('update/{id}', 'VoteController@update');
     });
     Route::group(['prefix' => 'likes'], function () {
-        Route::patch('/{id}', 'LikeController@update');
+        Route::patch('update/{id}', 'LikeController@update');
     });
+
     Route::group(['prefix' => 'productos'], function () {
         Route::get('', 'ProductController@index');
         Route::get('clasificaciones', 'ClassificationProductController@index');
@@ -64,7 +65,7 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::post('create', 'ProductController@create');
         Route::get('/{id}', 'ProductController@show');
         Route::put('/edit/{id}', 'ProductController@edit');
-        Route::patch('/{id}', 'ProductController@update');
+        Route::post('/update/{id}', 'ProductController@update');
         Route::patch('/{id}', 'ProductController@destroy');
     });
     Route::group(['prefix' => 'carteleras'], function () {
@@ -75,7 +76,9 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::get('tiquetes', 'TicketController@index');
         Route::get('localizacion', 'LocationController@index');
         Route::post('create', 'BillboardController@create');
+
         Route::get('/{id}', 'BillboardController@show');
+        Route::patch('update/{id}', 'BillboardController@update');
         Route::get('tiketes/{id}', 'BillboardController@tiketes');
     });
 });
