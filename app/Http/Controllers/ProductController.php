@@ -106,7 +106,7 @@ class ProductController extends Controller
             $products = Product::Where('active', true)->with([
                 "type_product",
                 "classification_products", "likes"
-            ])->limit(4)->get();
+            ])->addSelect(['like_count' => Like::select('like_count')->WhereColumn('product_id', 'products.id')])->OrderByDesc('like_count')->limit(4)->get();
             $response = $products;
             return response()->json($response, 200);
         } catch (Exception $e) {

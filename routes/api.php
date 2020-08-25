@@ -63,6 +63,7 @@ Route::group(['prefix' => 'cinecar'], function () {
         Route::get('platillosTop', 'ProductController@platillosTop');
         Route::get('snacksTop', 'ProductController@snacksTop');
         Route::post('create', 'ProductController@create');
+        Route::get('desactivadas', 'ProductController@desactivadas');
         Route::get('/{id}', 'ProductController@show');
         Route::put('/edit/{id}', 'ProductController@edit');
         Route::post('/update/{id}', 'ProductController@update');

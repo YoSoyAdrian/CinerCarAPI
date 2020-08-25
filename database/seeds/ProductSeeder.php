@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
         $product->name = 'Malteda';
         $product->description = 'Bebida fresa, vainilla y chocolate';
         $product->image = 'https://www.cucinare.tv/wp-content/uploads/2020/01/Malteadas-1-1024x579.jpg';
-        $product->price = '2500';
+        $product->price = '1500';
         $product->type_product_id = 3;
         $product->active = true;
         $product->save();
@@ -53,7 +53,7 @@ class ProductSeeder extends Seeder
         $product->name = 'Palomita';
         $product->description = 'Palomitas Dulces';
         $product->image = 'https://autocinesmadrid.es/wp-content/uploads/2019/12/palomitas-300x300.jpg';
-        $product->price = '2500';
+        $product->price = '2000';
         $product->type_product_id = 4;
         $product->active = true;
         $product->save();
@@ -65,7 +65,7 @@ class ProductSeeder extends Seeder
         $product = new \App\Product();
         $product->name = 'Hamburguesa';
         $product->description = 'Hamburguesa';
-        $product->price = '3000';
+        $product->price = '2000';
         $product->image = 'https://autocinesmadrid.es/wp-content/uploads/2019/12/hamburguesa-1-300x300.jpg';
         $product->type_product_id = 5;
         $product->active = true;
@@ -100,7 +100,7 @@ class ProductSeeder extends Seeder
         $product = new \App\Product();
         $product->name = 'Waffle';
         $product->description = 'Torre de waffle de chocolate';
-        $product->price = '2500';
+        $product->price = '1500';
         $product->image = 'https://2wvu5s2td87334giuu42cujp-wpengine.netdna-ssl.com/wp-content/uploads/2018/09/lunesweb_7.png';
         $product->type_product_id = 4;
         $product->active = true;
@@ -113,7 +113,7 @@ class ProductSeeder extends Seeder
         $product->name = 'Donas';
         $product->description = 'Donas de chocolate';
         $product->price = '1000';
-        $product->image = 'https://confiteriashernandez.es/wp-content/uploads/2020/01/BERLINA-CHOCOLATE-300x300.jpg';
+        $product->image = 'https://i0.wp.com/revistamariaorsini.com/wp-content/uploads/2016/08/donacuadrada.jpg?fit=700%2C700&ssl=1';
         $product->type_product_id = 4;
         $product->active = false;
         $product->save();
@@ -159,7 +159,7 @@ class ProductSeeder extends Seeder
         $product = new \App\Product();
         $product->name = 'Pizza';
         $product->description = "Pizza de pepperoni";
-        $product->price = '3000';
+        $product->price = '2000';
         $product->image = 'https://specials-images.forbesimg.com/imageserve/995467932/960x0.jpg?fit=scale';
         $product->type_product_id = 5;
         $product->active = true;
